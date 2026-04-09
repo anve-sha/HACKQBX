@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // DEPLOYMENT NOTE: Change this to your Render URL (e.g., 'https://my-model-api.onrender.com') when deploying to Netlify
             const API_BASE_URL = window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost' 
                 ? 'http://127.0.0.1:8000' 
-                : 'https://YOUR-RENDER-APP-NAME.onrender.com';
+                : 'https://hackqbx-omms.onrender.com';
 
             const response = await fetch(`${API_BASE_URL}/predict`, {
                 method: 'POST',
