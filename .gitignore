@@ -1,0 +1,28 @@
+# Large dataset folders
+train/
+val/
+testImages/
+predictions/
+runs/
+Offroad_Segmentation*/
+train_stats/
+ENV_SETUP/
+
+# Large binary/media files
+*.pth
+*.png
+*.jpg
+*.jpeg
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Environments
+.venv/
+venv/
+
+# System/IDE
+.vscode/
+.DS_Store

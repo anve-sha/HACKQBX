@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Segmentation Studio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header>
+            <div class="logo-wrapper">
+                <div class="orb"></div>
+                <h1>Vision AI</h1>
+            </div>
+            <p>High-Performance Semantic Segmentation</p>
+        </header>
+
+        <main>
+            <!-- Upload Section -->
+            <section class="upload-section glass-panel">
+                <div class="upload-zone" id="uploadZone">
+                    <input type="file" id="imageInput" accept="image/*" hidden />
+                    <div class="upload-content">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="upload-icon"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                        <h2 id="uploadText">Drag & Drop or Click to Upload</h2>
+                        <p>Supports JPG, PNG, WEBP (Max 5MB)</p>
+                    </div>
+                </div>
+                <!-- Action Button -->
+                <button id="predictBtn" class="primary-btn" disabled>
+                    <span class="btn-text">Run Model Inference</span>
+                    <div class="loader hidden"></div>
+                </button>
+            </section>
+
+            <!-- Results Section -->
+            <section class="results-section hidden" id="resultsSection">
+                
+                <!-- Metrics Bar -->
+                <div class="metrics-bar glass-panel">
+                    <div class="metric-card">
+                        <span class="metric-label">IoU Score</span>
+                        <div class="metric-value-wrapper">
+                            <span class="metric-value" id="iouScore">0.00</span><span class="metric-unit">%</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <span class="metric-label">Pixel Accuracy</span>
+                        <div class="metric-value-wrapper">
+                            <span class="metric-value" id="pixelAccuracy">0.00</span><span class="metric-unit">%</span>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <span class="metric-label">Dice Score</span>
+                        <div class="metric-value-wrapper">
+                            <span class="metric-value" id="diceScore">0.00</span><span class="metric-unit">%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image Comparisons -->
+                <div class="images-container">
+                    <div class="image-box glass-panel">
+                        <h3>Original Input</h3>
+                        <div class="image-wrapper">
+                            <img id="originalImage" src="" alt="Original" />
+                        </div>
+                    </div>
+                    <div class="image-box glass-panel model-result-box">
+                        <h3>Segmentation Map</h3>
+                        <div class="image-wrapper">
+                            <img id="segmentedImage" src="" alt="Segmented" />
+                            <div class="scan-line hidden"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+        </main>
+
+        <footer>
+            <p>Powered by PyTorch & FastAPI</p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
