@@ -1,132 +1,157 @@
 <div align="center">
 
-# 🌿 Offroad Scene Segmentation
+# 🌿 AI-Based Offroad Segmentation System
 **Next-Generation Environmental Understanding using DINOv2 & Vision APIs**
 
 [![PyTorch](https://img.shields.io/badge/PyTorch-%23EE4C2C.svg?style=for-the-badge&logo=PyTorch&logoColor=white)](#)
 [![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)](#)
-[![DINOv2](https://img.shields.io/badge/DINOv2-Meta_AI-blue?style=for-the-badge)](#)
-[![Hackathon](https://img.shields.io/badge/Hackathon-Project-success?style=for-the-badge)](#)
+[![HTML/CSS/JS](https://img.shields.io/badge/Frontend-Vanilla-orange?style=for-the-badge)](#)
+[![HackQBX](https://img.shields.io/badge/Hackathon-HackQBX-success?style=for-the-badge)](#)
 
 </div>
 
 ---
 
 ## 🎯 Project Overview
-Understanding unstructured natural environments is notoriously difficult for traditional computer vision systems. **Offroad Scene Segmentation** bridges that gap by providing a high-performance semantic segmentation engine capable of classifying natural landscapes—trees, dry bushes, rocks, logs, and more—into 10 distinct environmental classes. 
+Understanding unstructured natural environments is notoriously difficult for traditional computer vision systems. **AI-Based Offroad Segmentation System** bridges that gap by providing a high-performance semantic segmentation engine capable of classifying natural landscapes—trees, dry bushes, rocks, logs, and more—into 10 distinct environmental classes. 
 
-This project goes beyond just a machine learning notebook. I built a **full-stack, production-ready system** wrapping the cutting-edge PyTorch model inside an optimized FastAPI backend and serving it via a seamless, glassmorphism-styled Web UI.
-
----
-
-## ✨ Key Features
-- 🤖 **Foundation Model Integration:** Leverages Meta's DINOv2 self-supervised vision transformer as an incredibly powerful feature extractor.
-- ⚡ **Lightweight ConvNeXt Head:** A custom, highly efficient segmentation head designed specifically to aggregate DINO patch-tokens.
-- 🎨 **Full-Stack Glassmorphism UI:** A beautiful, animated frontend interface to upload images, stream them to the API, and dynamically visualize predicted mask boundaries.
-- 🚀 **Production-Ready API Endpoint:** Decoupled FastAPI backend optimized with CPU-fallbacks for seamless Render.com deployments, eliminating CUDA bloat.
+This project goes beyond a simple ML script. I built a **full-stack system** wrapping the cutting-edge PyTorch model inside an optimized FastAPI backend and serving it via a seamless, glassmorphism-styled Web UI deployed on Netlify.
 
 ---
 
-## 🏗️ Model Architecture
-
-To achieve accurate environmental feature bounding on a constrained time and data budget, the architecture utilizes a freeze-and-train methodology:
-
-1. **Backbone (`DINOv2-vits14`):** Frozen self-supervised vision transformer. DINOv2 naturally understands depth, contours, and object boundaries without fine-tuning, outputting rich patch-token embeddings.
-2. **Segmentation Head (`ConvNeXt-style`):** Uses an un-frozen `stem -> block -> classifier` pipeline.
-   - Initial `7x7` Depthwise Convolution stem.
-   - Processing block utilizing GELU activations and `1x1` point-wise combinations.
-   - Outputs logit masks mapped perfectly to 10 environmental target classes.
+## 🚨 Important Note
+> **⚠️ Due to hardware limitations and large model size, the backend is recommended to run locally.**
+> While the frontend is deployed on Netlify, the PyTorch segmentation model requires significant computational resources that exceed free-tier cloud hosting limits. Please follow the instructions below to run the backend on your own machine.
 
 ---
 
-## 📊 Training Details & Results
+## 🛑 Problem Statement
+Off-road autonomous navigation lacks clear road boundaries and predictable structures. Typical vision models fail at separating complex foliage, uneven terrain, and natural debris. A reliable perception system is necessary to semantically segment environmental elements for safe off-road traversability.
 
-The model was trained entirely on a custom Offroad dataset with mapped pixels ranging from `0` (Sky) to `10000` (Background clutter). 
+---
 
-### ⚙️ Hyperparameters
-* **Epochs:** `10`
-* **Batch Size:** `2`
-* **Learning Rate:** `1e-4`
-* **Optimizer:** SGD (Momentum = 0.9)
-* **Image Dimensions:** Resized heavily to `960x540` ensuring structural integrity during multi-scaling.
+## 💡 Solution Approach
+To achieve accurate environmental feature bounding on a constrained boundary, the architecture utilizes a freeze-and-train methodology:
+1. **Backbone (`DINOv2-vits14`):** Frozen self-supervised vision transformer by Meta. DINOv2 naturally understands depth, contours, and object boundaries without fine-tuning.
+2. **Segmentation Head (`ConvNeXt-style`):** A custom, highly efficient segmentation head to map patch-tokens to 10 environmental classes. 
+3. **Interactive UI:** A user-friendly web interface allowing instant uploads and real-time segmentation map visualization.
 
-### 🏆 Final Evaluation Metrics
-Despite a constrained hackathon timeframe and complex 10-class unstructured nature classes, the model achieved strong initial clustering capability:
+---
+
+## 💻 Tech Stack
+- **Frontend:** `HTML5`, `CSS3` (Glassmorphism), `JavaScript` (Deployed on **Netlify**)
+- **Backend:** `FastAPI`, `Uvicorn` (Runs locally)
+- **AI / ML Model:** `PyTorch`, `Meta DINOv2`, `TorchVision`
+- **Data Processing:** `NumPy`, `OpenCV-Headless`, `Pillow`
+
+---
+
+## 🚀 Run Backend Locally
+Follow these step-by-step instructions to spin up the PyTorch server on your machine:
+
+1. **Clone the repository:**
+   ```bash
+   git clone <your-repo-link>
+   cd <repo-folder>
+   ```
+
+2. **Navigate to the backend directory:**
+   ```bash
+   cd project/backend
+   ```
+
+3. **Create a virtual environment:**
+   ```bash
+   python -m venv venv
+   ```
+
+4. **Activate the environment:**
+   - **Windows:**
+     ```bash
+     venv\Scripts\activate
+     ```
+   - **Linux/Mac:**
+     ```bash
+     source venv/bin/activate
+     ```
+
+5. **Install dependencies:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+6. **Run the FastAPI server:**
+   ```bash
+   uvicorn app:app --reload
+   ```
+
+7. **Verify it's running:**
+   Open [http://127.0.0.1:8000](http://127.0.0.1:8000) in your browser.
+
+---
+
+## 🔌 Frontend Connection
+If the backend is running locally, ensure the frontend points to your local server. 
+Update the API URL in `script.js` (inside `project/frontend/` or your Netlify deployed code):
+```javascript
+fetch("http://127.0.0.1:8000/predict")
+```
+
+---
+
+## 👨‍⚖️ How to Use (For Judges)
+Here are the precise steps to test the full system:
+
+1. **Open the Netlify Frontend Link:** Go to our live deployed website (URL).
+2. **Run Backend Locally:** Follow the "Run Backend Locally" steps above to start the FastAPI server on your machine.
+3. **Upload Image:** Click the upload module on the frontend and select an offroad natural image.
+4. **View Output:** The system will process the image through the local backend and stream the segmented visual output along with IoU, Dice Score, and Accuracy metrics back to the UI!
+
+---
+
+## 📊 Results (IoU score)
+Despite complex 10-class unstructured nature classes, the model achieved strong initial clustering capability:
 
 | Metric | Score | Note |
 |---|---|---|
 | **Best Pixel Accuracy** | `70.16%` | *Achieved on Epoch 10* |
 | **Best Dice Score (F1)** | `43.83%` | *Achieved on Epoch 10* |
 | **Best Mean IoU** | `29.35%` | *Achieved on Epoch 10* |
-| **Lowest Val Loss** | `0.8181` | *Achieved on Epoch 10* |
 
+*(Evaluations achieved on a custom Offroad dataset for 10 epochs).*
+<br>
 <div align="center">
-  <img src="train_stats/all_metrics_curves.png" alt="Training Graphs" width="600" />
+  <img src="train_stats/all_metrics_curves.png" alt="Training Graphs" width="500" />
 </div>
 
 ---
 
-## 💻 Tech Stack
-- **AI / ML Layer:** `PyTorch`, `TorchVision`, `Meta DINOv2`
-- **Data Engineering:** `NumPy`, `OpenCV-Headless`, `Pillow`
-- **Backend Infrastructure:** `FastAPI`, `Uvicorn`, `Python-Multipart`
-- **Frontend / UI:** Vanilla `HTML5`, `CSS3` (Glassmorphism Design), `ES6 JavaScript` (Fetch API)
+## 🧗 Challenges Faced
+1. **OOM (Out-Of-Memory) Constraints on Cloud:** Large ML models easily exceed the 512MB RAM limits of free tiers (like Render). We solved this by decoupling the FastAPI to run locally while keeping the UI accessible on the cloud.
+2. **Complex Feature Boundaries:** Forests and bushes have chaotic borders. We overcame this by using the DINOv2 self-supervised transformer which excels at boundary detection in unstructured data.
 
 ---
 
-## 📂 Project Structure
-
-```text
-├── train_segmentation.py        # Model training script
-├── train_stats/                 # Dynamic loss/IoU graph outputs
-├── project/
-│   ├── backend/
-│   │   ├── app.py               # FastAPI PyTorch ingestion server
-│   │   └── requirements.txt     # Dependency graph (CPU-Optimized)
-│   ├── frontend/
-│   │   ├── index.html           # Structure 
-│   │   ├── style.css            # Styling
-│   │   └── script.js            # Dynamic API integrations
-```
+## 🎉 Conclusion
+The **AI-Based Offroad Segmentation System** vividly demonstrates the feasibility of combining lightweight UI dashboards with thick, compute-heavy AI backends running entirely locally. It lays the groundwork to enable future rovers and self-driving platforms to navigate untamed environments safely.
 
 ---
 
-## 🚀 How to Run Locally
-
-### 1️⃣ Start the Backend API
-```bash
-cd project/backend/
-pip install -r requirements.txt
-python app.py
-```
-*Your model begins serving predictions on `http://127.0.0.1:8000`*
-
-### 2️⃣ Launch the UI
-Because the UI is completely decoupled and fully static, you can simply spin up a temporary Python server:
-```bash
-cd project/frontend/
-python -m http.server 3000
-```
-*Visit `http://localhost:3000` to interact with the Semantic Studio!*
+## ✨ Credits
+A huge thank you to the following individuals for their incredible contributions and guidance throughout this project:
+- **Ridhi didi** – For invaluable guidance and mentorship.
+- **Arohi Verma** – Core contributor.
+- **Harshita** – Core contributor.
 
 ---
 
-## 🧗 Challenges & Solutions
-1. **OOM (Out-Of-Memory) Constraints on Cloud Deployment:**
-   - *Challenge:* Free-tier deployment platforms like Render constrain memory to 512MB, but PyTorch + CUDA binaries sum up to over 1GB.
-   - *Solution:* Engineered the `requirements.txt` to strictly pull the `+cpu` Python wheel, immediately stripping hundreds of megabytes of unwanted GPU driver binaries allowing successful free deployments.
-2. **Transforming High-Resolution Unstructured Data:**
-   - *Challenge:* Forests and bushes have chaotic borders causing extreme loss spikes in typical ResNet backbones.
-   - *Solution:* Anchored the backbone to Meta's DINOv2 transformer sequence which was pre-trained extensively on unstructured data, passing mathematically dense representations into a much smaller, controllable ConvNeXt head.
-
----
-
-## 🔭 Future Improvements
-* Set up a proper CI/CD Github Actions pipeline.
-* Augment the initial 10 Epochs to 50 Epochs leveraging dynamic Learning Rate Schedulers (`ReduceLROnPlateau`).
-* Implement bounding box aggregations over the segmentation maps to identify exact dimensions of ground-debris boundaries.
+## 🙌 Acknowledgement
+Special thanks to the amazing communities and organizations that made this possible:
+- 🏆 **HackQBX** 
+- 💻 **DevQBX**
+- 🛠️ **SiteCraft**
 
 ---
 <div align="center">
-<i>Built to solve complex vision problems with elegant engineering.</i>
+<i>Built with ❤️ to solve complex vision problems.</i>
 </div>
