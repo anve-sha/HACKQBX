@@ -96,7 +96,7 @@ Update the API URL in `script.js` (inside `project/frontend/` or your Netlify de
 ```javascript
 fetch("http://127.0.0.1:8000/predict")
 ```
-
+DEPLOYED LINK FOR FRONTEND-:https://hackqbx.netlify.app
 ---
 
 ## 👨‍⚖️ How to Use (For Judges)
